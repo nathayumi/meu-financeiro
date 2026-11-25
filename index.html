@@ -1,6 +1,42 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f7e9eb"><meta name="apple-mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><title>Meu Financeiro ♡</title><link rel="stylesheet" href="style.css"></head><body><header><span class="heart">♡</span><div><small>SEU ESPAÇO FINANCEIRO</small><h1>Meu Financeiro</h1></div></header><nav><button data-p="inicio">Início</button><button data-p="lanc">Lançamentos</button><button data-p="cartao">Cartões</button><button data-p="inv">Investimentos</button><button data-p="metas">Metas</button></nav><main>
-<section id="inicio" class="page"><div class="hero"><small>PATRIMÔNIO INVESTIDO IDENTIFICADO</small><strong>R$ 18.505,67</strong><span>Salário líquido mensal: R$ 5.100,00</span></div><div class="grid"><article><small>Fatura dezembro</small><b>R$ 3.894,41</b></article><article><small>Pilates fora da fatura</small><b>R$ 253,00</b></article><article><small>Saldo planejado</small><b class="green">R$ 952,59</b></article><article><small>Despesas novembro*</small><b>R$ 3.815,24</b></article></div><div class="box"><h2>Orçamento sugerido · dezembro</h2><div id="budget"></div><p class="hint">*Novembro é parcial, com base nos prints. Saldo de dezembro antes de outros compromissos não informados.</p></div><div class="box"><h2>Adicionar lançamento</h2><form id="form"><input id="desc" placeholder="Descrição" required><div class="row"><input id="valor" type="number" min=".01" step=".01" placeholder="Valor (R$)" required><select id="tipo"><option value="Despesa">Despesa</option><option value="Receita">Receita</option></select></div><button class="primary">Adicionar</button></form></div></section>
-<section id="lanc" class="page"><h2>Lançamentos</h2><button id="csv">Exportar CSV</button><div id="list"></div></section>
-<section id="cartao" class="page"><h2>Cartões · C6 Bank</h2><div class="hero"><small>FATURA ABERTA · VENCE 07/12/2026</small><strong>R$ 3.894,41</strong></div><div id="cards"></div><p class="hint">Valores transcritos dos prints, sem conexão automática com o banco.</p></section>
-<section id="inv" class="page"><h2>Investimentos</h2><div class="hero"><small>SALDO BRUTO · RENDIMENTO BRUTO R$ 861,67</small><strong>R$ 18.505,67</strong></div><div id="invest"></div></section>
-<section id="metas" class="page"><h2>Metas financeiras</h2><div class="box"><h3>Meta futura de aportes</h3><strong class="green">R$ 500/mês</strong><p class="hint">Retomar quando o orçamento permitir, sem resgatar CDB para pagar faturas.</p></div><div class="box"><ul><li>Evitar novas parcelas por enquanto.</li><li>Preservar os investimentos.</li><li>Manter reserva de caixa.</li><li>Revisar gastos semanalmente.</li></ul></div></section></main><footer>♡ Dados salvos neste navegador e aparelho. Exporte backups regularmente.</footer><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7e9eb"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png">
+<title>Meu Financeiro ♡</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header><div class="brand"><span class="heart">♡</span><div><small>SEU ESPAÇO FINANCEIRO</small><h1>Meu Financeiro</h1></div></div><span class="monthtag">♡ PESSOAL</span></header>
+<nav id="tabs">
+<button class="active" data-page="mensal">Visão mensal</button><button data-page="lancamentos">Lançamentos</button>
+<button data-page="cartoes">Cartões</button><button data-page="investimentos">Investimentos</button><button data-page="metas">Metas</button>
+</nav>
+<main>
+<section id="mensal" class="page active">
+ <div class="monthbar"><button id="prev" aria-label="Mês anterior">‹</button><div><small>RESUMO FINANCEIRO</small><h2 id="monthTitle">Novembro 2026</h2></div><button id="next" aria-label="Próximo mês">›</button></div>
+ <div class="hero"><small>SALDO DO MÊS · RECEITAS MENOS DESPESAS</small><strong id="balance">R$ 0,00</strong><div class="twocol"><span>Receitas <b id="incomeTotal">R$ 0,00</b></span><span>Despesas <b id="expenseTotal">R$ 0,00</b></span></div></div>
+ <div class="cards"><article><small>Despesas no mês</small><b id="expenseCard">R$ 0,00</b></article><article><small>Orçamento mensal</small><b>R$ 5.100,00</b></article></div>
+ <div class="box"><div class="boxhead"><h3>Despesas por categoria</h3><small id="categoryCount"></small></div><div id="categoryChart"></div></div>
+ <div class="box"><div class="boxhead"><h3>Receitas por categoria</h3></div><div id="incomeChart"></div></div>
+ <div class="box"><div class="boxhead"><h3>Últimos lançamentos</h3><button class="textbutton" data-goto="lancamentos">Ver todos</button></div><div id="recent"></div></div>
+ <p class="hint">Compras no crédito são registradas no mês da compra. O pagamento da fatura não deve ser lançado novamente como despesa, para evitar duplicidade.</p>
+</section>
+<section id="lancamentos" class="page">
+ <h2>Lançamentos</h2>
+ <div class="box"><h3>Adicionar receita ou despesa</h3>
+ <form id="entryForm">
+ <label>Descrição<input id="description" placeholder="Ex.: mercado, salário, Uber" required></label>
+ <div class="formrow"><label>Valor (R$)<input id="amount" type="number" min="0.01" step="0.01" placeholder="0,00" required></label><label>Tipo<select id="type"><option value="despesa">Despesa</option><option value="receita">Receita</option></select></label></div>
+ <div class="formrow"><label>Categoria<select id="category" required><option value="">Escolha manualmente</option><option>Alimentação</option><option>Moradia</option><option>Transporte</option><option>Saúde</option><option>Academia e bem-estar</option><option>Beleza e cuidados</option><option>Compras</option><option>Lazer e restaurantes</option><option>Assinaturas</option><option>Salário</option><option>Reembolso</option><option>Investimentos</option><option>Outros</option></select></label><label>Pagamento<select id="method"><option>PIX</option><option>Débito</option><option>Crédito</option><option>Dinheiro</option><option>Transferência</option></select></label></div>
+ <label>Data<input id="date" type="date" required></label>
+ <button class="primary">Salvar lançamento</button></form></div>
+ <div class="box"><div class="boxhead"><h3>Histórico</h3><button id="export" class="textbutton">Exportar CSV</button></div><div id="allEntries"></div></div>
+</section>
+<section id="cartoes" class="page"><h2>Cartões · C6 Bank</h2><div class="hero"><small>FATURA DE DEZEMBRO · VENCIMENTO 07/12/2026</small><strong>R$ 3.894,41</strong><span>Valor informado nos prints; não há conexão automática com o banco.</span></div><div id="cardlist"></div><p class="hint">Ao lançar uma compra no crédito, registre a compra uma única vez. Não registre o pagamento integral da fatura como nova despesa.</p></section>
+<section id="investimentos" class="page"><h2>Investimentos</h2><div class="hero"><small>PATRIMÔNIO BRUTO IDENTIFICADO</small><strong>R$ 18.505,67</strong><span>Rendimento bruto informado: R$ 861,67</span></div><div id="investlist"></div><p class="hint">Valores transcritos dos prints e sujeitos a atualização.</p></section>
+<section id="metas" class="page"><h2>Metas financeiras</h2><div class="box"><h3>Meta futura de aportes</h3><strong class="green">R$ 500,00/mês</strong><p class="hint">Meta planejada, a retomar quando o orçamento permitir.</p></div><div class="box"><h3>Objetivos</h3><ul><li>Evitar novas compras parceladas por enquanto.</li><li>Preservar os investimentos.</li><li>Manter uma reserva de caixa.</li><li>Revisar os gastos semanalmente.</li></ul></div></section>
+</main><footer>♡ Seus lançamentos ficam salvos neste navegador e aparelho. Exporte CSV para backup.</footer>
+<script src="app.js"></script>
+</body></html>

@@ -1,1 +1,1 @@
-Aplicativo pessoal PWA. Publique os arquivos na raiz do repositório e habilite GitHub Pages. Lançamentos ficam no armazenamento local do navegador; não sincronizam entre aparelhos. Exporte CSV como backup. Não há integração bancária.
+Meu Financeiro: visão mensal por receitas, despesas e categoria. Dados ficam localmente no navegador/aparelho; não há nuvem nesta versão. Exporte CSV para backup.
